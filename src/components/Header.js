@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 
 const Headers = ({isLogin}) => {
+ const navigate= useNavigate();
 
   async function VerifyEmail(){
    try{
@@ -21,11 +22,17 @@ const Headers = ({isLogin}) => {
     //here data is present brother of response 
     const data=await response.json();
     console.log(data);
-    
+
   }catch(error){
     console.error('The error is'+error);
   }
 
+  }
+
+  function LogoutHandler(){
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('isLogin');
+    navigate('/')
   }
   return (
     <div className='border border-2 w-100 rounded-2 '>
@@ -33,7 +40,9 @@ const Headers = ({isLogin}) => {
             <li className='me-3 p-2 fw-bold'>Home</li>
             <li className='me-3 p-2 fw-bold'>Products</li>
             <li className='me-3 p-2 fw-bold'>About Us</li>
-            {localStorage.getItem('isLogin')&&<li><button onClick={()=>VerifyEmail()} className={'float-end btn btn-dark '}>Verify Email</button></li>}
+            {localStorage.getItem('isLogin')&&<li className='me-3 p-2 fw-bold'><button onClick={()=>VerifyEmail()} className={'float-end btn btn-dark '}>Verify Email</button></li>}
+            {localStorage.getItem('isLogin')&&<li className='me-3 p-2 fw-bold'><button onClick={LogoutHandler} className={'float-end btn btn-dark '}>Logout</button></li>}
+
         </ul>
         <div className='d-flex flex-row justify-content-between border border-4 border-black rounded-2 p-2 align-items-end'> 
           <p>Welcome to the expense tracker</p>

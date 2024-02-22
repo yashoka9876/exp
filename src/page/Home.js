@@ -49,6 +49,8 @@ const Home = () => {
         }catch(error){
             console.error('Error updating cart item:', error);
         }
+
+        
         
     }
   return <>

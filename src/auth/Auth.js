@@ -24,6 +24,9 @@ const Authentication = ({isLogin,mode,SignUp,ModeHandler}) => {
             }
             console.log(AuthObj)
             SignUp(AuthObj)
+            Email.current.value='';
+            Password.current.value='';
+            
         }
     
 
