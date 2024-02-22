@@ -44,6 +44,7 @@ const Home = () => {
             setToken(data.idToken);
             setIsLogin(true);
             localStorage.setItem('idToken',data.idToken);
+            localStorage.setItem('isLogin',isLogin);
             
         }catch(error){
             console.error('Error updating cart item:', error);
