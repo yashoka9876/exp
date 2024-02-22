@@ -1,10 +1,36 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 const Profile = () => {
-
     const profileName=useRef();
     const photoUrl=useRef();
+
+    useEffect(()=>{
+        async function getProfileData(){
+            try{const response=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({
+                    idToken:localStorage.getItem('idToken')
+                })
+            
+            })
+            if(!response.ok){
+                throw new Error('!!!!!!!!!!!!!!!!')
+            }
+            const data=await response.json();
+            profileName.current.value=data.users[0].displayName;
+            photoUrl.current.value=data.users[0].photoUrl;
+        }catch(error){
+                console.error('we got failed to get data'+ error)
+            }
+        }
+
+        getProfileData();
+    },[])
+
 
      function FormHandler(event){
         event.preventDefault();
