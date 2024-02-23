@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, redirect, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Headers = ({isLogin}) => {
  const navigate= useNavigate();
@@ -40,6 +40,7 @@ const Headers = ({isLogin}) => {
             <li className='me-3 p-2 fw-bold'>Home</li>
             <li className='me-3 p-2 fw-bold'>Products</li>
             <li className='me-3 p-2 fw-bold'>About Us</li>
+             <li className='me-3 p-2 fw-bold'><Link to="expense">Expenses</Link></li>
             {localStorage.getItem('isLogin')&&<li className='me-3 p-2 fw-bold'><button onClick={()=>VerifyEmail()} className={'float-end btn btn-dark '}>Verify Email</button></li>}
             {localStorage.getItem('isLogin')&&<li className='me-3 p-2 fw-bold'><button onClick={LogoutHandler} className={'float-end btn btn-dark '}>Logout</button></li>}
 
