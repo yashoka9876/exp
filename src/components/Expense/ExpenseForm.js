@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 
-const ExpenseForm = ({PostData}) => {
+const ExpenseForm = ({PostData ,
+  moneySpent,
+  description,
+  category,
+  setMoneySpent,
+  setDescription,
+  setCategory
+}) => {
 
-  const [moneySpent, setMoneySpent] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Food');
+  // const [moneySpent, setMoneySpent] = useState('');
+  // const [description, setDescription] = useState('');
+  // const [category, setCategory] = useState('Food');
   // trying to select item
 
   const handleSubmit = (event) => {
