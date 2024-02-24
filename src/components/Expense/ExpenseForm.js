@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-const ExpenseForm = ({ItemListHandler}) => {
-    const [moneySpent, setMoneySpent] = useState('');
+const ExpenseForm = ({PostData}) => {
+
+  const [moneySpent, setMoneySpent] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('Food');
   // trying to select item
@@ -10,7 +11,7 @@ const ExpenseForm = ({ItemListHandler}) => {
     event.preventDefault();
     // You can handle form submission here
     console.log('Form submitted:', { moneySpent, description, category });
-    ItemListHandler({moneySpent, description, category});
+    PostData({moneySpent, description, category});
   };
   return (
     <div className="container">
