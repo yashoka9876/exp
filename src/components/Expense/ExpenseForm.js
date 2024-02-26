@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-const ExpenseForm = ({PostData ,
+const ExpenseForm = ({
+  PostData ,
   moneySpent,
   description,
   category,

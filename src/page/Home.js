@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import Authentication from '../auth/Auth'
 import Headers from '../components/Header';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../store/AuthReduces';
 
 const Home = () => {
     const [token,setToken]=useState('');
     const [isLogin,setIsLogin]=useState(false);
     const [mode,setMode]=useState('SignUp');
+
+    //here we wer using redux concenpt brother.
+
+    const dispatch=useDispatch();
     
     
    function ModeHandler(){
@@ -45,6 +51,7 @@ const Home = () => {
             setIsLogin(true);
             localStorage.setItem('idToken',data.idToken);
             localStorage.setItem('isLogin',isLogin);
+            dispatch(authActions.login(data.idToken));
             
         }catch(error){
             console.error('Error updating cart item:', error);

@@ -1,8 +1,12 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import { authActions } from '../store/AuthReduces';
 
-const Headers = ({isLogin}) => {
+const Headers = (props) => {
+  const dispatch=useDispatch();
  const navigate= useNavigate();
+ const isLogin=useSelector(state=>state.auth.isLogin);
 
   async function VerifyEmail(){
    try{
@@ -29,11 +33,18 @@ const Headers = ({isLogin}) => {
 
   }
 
-  function LogoutHandler(){
-    localStorage.removeItem('idToken');
-    localStorage.removeItem('isLogin');
-    navigate('/')
-  }
+  // function LogoutHandler(){
+  //   localStorage.removeItem('idToken');
+  //   localStorage.removeItem('isLogin');
+  //   navigate('/')
+  // }
+
+  //here we are going to get state
+  const Token=useSelector(state=>state.auth.Token);
+  const isLoginn=useSelector(state=>state.auth.isLogin);
+  console.log(Token)
+  console.log(isLoginn);
+  
   return (
     <div className='border border-2 w-100 rounded-2 '>
         <ul className='d-flex list-unstyled'>
@@ -41,16 +52,16 @@ const Headers = ({isLogin}) => {
             <li className='me-3 p-2 fw-bold'>Products</li>
             <li className='me-3 p-2 fw-bold'>About Us</li>
              <li className='me-3 p-2 fw-bold'><Link to="expense">Expenses</Link></li>
-            {localStorage.getItem('isLogin')&&<li className='me-3 p-2 fw-bold'><button onClick={()=>VerifyEmail()} className={'float-end btn btn-dark '}>Verify Email</button></li>}
-            {localStorage.getItem('isLogin')&&<li className='me-3 p-2 fw-bold'><button onClick={LogoutHandler} className={'float-end btn btn-dark '}>Logout</button></li>}
+            {isLoginn && <li className='me-3 p-2 fw-bold'><button onClick={()=>VerifyEmail()} className={'float-end btn btn-dark '}>Verify Email</button></li>}
+            {isLoginn && <li className='me-3 p-2 fw-bold'><button onClick={()=>dispatch(authActions.logout())} className={'float-end btn btn-dark '}>Logout</button></li>}
 
         </ul>
-        <div className='d-flex flex-row justify-content-between border border-4 border-black rounded-2 p-2 align-items-end'> 
-          <p>Welcome to the expense tracker</p>
-          {isLogin &&<p>
+        {isLogin && <div className='d-flex flex-row justify-content-between border border-4 border-black rounded-2 p-2 align-items-end'> 
+          {isLogin && <p>Welcome to the expense tracker</p>}
+          {isLogin && <p>
             <span>your profiel is incomplete<span></span><Link to='profile'>complete now</Link></span>
           </p>}
-        </div>
+        </div>}
     </div>
   )
 }

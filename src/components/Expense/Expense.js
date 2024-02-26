@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ExpenseForm from './ExpenseForm'
 import ExpenseList from './ExpenseList'
+import { authActions } from '../../store/AuthReduces';
+import { ExpenseActions } from '../../store/ExpensesReducers';
+import { useDispatch } from 'react-redux';
 
 const Expense = () => {
   const [postput,setPostPut]=useState(false);
@@ -12,7 +15,9 @@ const Expense = () => {
     const [ItemList,setItemList]=useState([]);
 //i am writting this comment because i am not able to see this PostData
 
+const dispatch=useDispatch();
     async function PostData(obj='defalut value'){
+
       console.log(postput)
       console.log(updatedKey)
 
@@ -58,6 +63,7 @@ const Expense = () => {
 
      }
     }
+
     async function GetData(){
       try{
       const response=await fetch('https://expensetrackersharp-default-rtdb.firebaseio.com/expenses.json')
@@ -68,7 +74,8 @@ const Expense = () => {
       const data=await response.json();
       
       console.log(Object.entries(data));
-      setItemList(Object.entries(data))
+      setItemList(Object.entries(data));
+       dispatch(ExpenseActions.setExpense(Object.entries(data)))
       
       }catch(error){
         console.log('this was the error'+error);
@@ -81,11 +88,7 @@ const Expense = () => {
       GetData()
     },[])
 
-    // { moneySpent, description, category }
-
-    // function ItemListHandler(obj){
-    //     setItemList([...ItemList,obj]);
-    // }
+  
   return (
    <>
         <ExpenseForm  

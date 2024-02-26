@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 
 
@@ -17,6 +18,8 @@ const ExpenseList = ({
   setUpdatedKey
 }) => {
 
+  const ExpenseList=useSelector(state=>state.Expence.ExpenseItem);
+  console.log(ExpenseList);
 
   async function deleteHandler(id){
     console.log(id)
@@ -54,7 +57,7 @@ const ExpenseList = ({
     <div className='container '>
         <ul className='list-group '>
         {
-           ListItem.map(([key,item])=><li key={key} className='list-group-item d-flex justify-content-around'>
+           ExpenseList.map(([key,item])=><li key={key} className='list-group-item d-flex justify-content-around'>
             <div>${item.moneySpent}</div>
             <div>{item.description}</div>
             <div>{item.category}</div>

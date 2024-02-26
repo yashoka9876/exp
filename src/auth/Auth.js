@@ -18,7 +18,6 @@ const Authentication = ({isLogin,mode,SignUp,ModeHandler}) => {
         }
         
         if(mode===SignUp){
-            console.log('hia');
                 if(Password.current.value !== ConfirmPassword.current.value){
                     window.confirm('password an confirm password are not same');
                     return;
@@ -30,6 +29,8 @@ const Authentication = ({isLogin,mode,SignUp,ModeHandler}) => {
             Password.current.value='';
             
         }
+
+        ///here forget password function is working here brother 
 
         function forgetPasshandler(){
             console.log(forgetpass)
