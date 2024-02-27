@@ -16,6 +16,7 @@ const Expense = () => {
 //i am writting this comment because i am not able to see this PostData
 
 const dispatch=useDispatch();
+
     async function PostData(obj='defalut value'){
 
       console.log(postput)
@@ -35,14 +36,15 @@ const dispatch=useDispatch();
       }
       
       console.log(response);
-      window.alert(response);
+      dispatch(ExpenseActions.addUpTotal(obj.moneySpent));
+      GetData()
       }catch(error){
         console.log('this was the error'+error);
       }
 
       //this below code is run when you press on update button
      }else{
-      console.log('bro updated key function ran this ttime')
+      console.log('bro updated key function ran this ttime');
 
       try{
         const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/expenses/${updatedKey}.json`,{
@@ -64,6 +66,8 @@ const dispatch=useDispatch();
      }
     }
 
+
+//here this one is function which is used to get data when function is executing.
     async function GetData(){
       try{
       const response=await fetch('https://expensetrackersharp-default-rtdb.firebaseio.com/expenses.json')
@@ -72,10 +76,14 @@ const dispatch=useDispatch();
       }
 
       const data=await response.json();
-      
-      console.log(Object.entries(data));
-      setItemList(Object.entries(data));
-       dispatch(ExpenseActions.setExpense(Object.entries(data)))
+      if(!data){
+        dispatch(ExpenseActions.setExpense([]))
+      }else{
+
+        console.log(Object.entries(data));
+        setItemList(Object.entries(data));
+         dispatch(ExpenseActions.setExpense(Object.entries(data)))
+      }
       
       }catch(error){
         console.log('this was the error'+error);
