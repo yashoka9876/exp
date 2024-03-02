@@ -88,7 +88,7 @@ const Profile = () => {
                 <p>
                     <span></span>
                     <span>full Name</span>
-                    <input ref={profileName} type='text' className='rounded-2 m-1 '></input>
+                    <input ref={profileName} type='text' className='rounded-2 m-1 ' name='ashoka'></input>
                     
                 </p>
                 <p>

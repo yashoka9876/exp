@@ -80,6 +80,7 @@ console.log(IsPremium);
         </ul>
         {isLogin && <div className='d-flex flex-row justify-content-between border border-4 border-black rounded-2 p-2 align-items-end'> 
           {isLogin && <p>Welcome to the expense tracker</p>}
+          <p>Welcome to the expense tracker</p>
           {isLogin && <p>
             <span>your profiel is incomplete<span></span><Link to='profile'>complete now</Link></span>
           </p>}
