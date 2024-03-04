@@ -13,7 +13,7 @@ const Headers = ({toggleTheme}) => {
 
   
 
-
+//https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses.json
 console.log(IsPremium);
   async function VerifyEmail(){
    try{
@@ -44,7 +44,7 @@ console.log(IsPremium);
     const ExpenceObj=ExpenseList.map(([key,value])=>{
       return value
     })
-    console.log(ExpenceObj);
+
 
     const csvContent="data:text/csv;charset=utf-8," +
     ExpenceObj.map((item)=>Object.values(item).join(',')).join('\n');
@@ -67,15 +67,15 @@ console.log(IsPremium);
   return (
     <div className='border border-2 w-100 rounded-2 '>
         <ul className='d-flex list-unstyled'>
-            <li className='me-3 p-2 fw-bold'>Home</li>
-            <li className='me-3 p-2 fw-bold'>Products</li>
-            <li className='me-3 p-2 fw-bold'>About Us</li>
-             <li className='me-3 p-2 fw-bold'><button className='float-end btn btn-dark '><Link to="expense">Expenses</Link></button></li>
+            <li className='me-3 p-2 fw-bold'><Link to='/'><button  className={'float-end btn btn-dark '}>Home</button></Link></li>
+            <li className='me-3 p-2 fw-bold'><button  className={'float-end btn btn-dark '}>Produts</button></li>
+            <li className='me-3 p-2 fw-bold'><button  className={'float-end btn btn-dark '}>About Us</button></li>
+             <li className='me-3 p-2 fw-bold'><button className='float-end btn btn-dark '><Link to={isLoginn ?"expense":'/'}>Expenses</Link></button></li>
             {isLoginn && <li className='me-3 p-2 fw-bold'><button onClick={()=>VerifyEmail()} className={'float-end btn btn-dark '}>Verify Email</button></li>}
-            {isLoginn && <li className='me-3 p-2 fw-bold'><button onClick={()=>dispatch(authActions.logout())} className={'float-end btn btn-dark '}>Logout</button></li>}
+            {isLoginn && <li className='me-3 p-2 fw-bold'><button onClick={()=>dispatch(authActions.logout())} className={'float-end btn btn-dark '}><Link to='/'>Logout</Link></button></li>}
             {!isLoginn && <li className='me-3 p-2 fw-bold'><button className='float-end btn btn-dark '><Link to='/auth'>Login</Link></button></li>}
-            {IsPremium && <li className='me-3 p-2 fw-bold'><button onClick={()=>toggleTheme()}   className='float-end btn btn-dark '>Take Premium</button></li>}
-            {IsPremium && <li className='me-3 p-2 fw-bold'><button onClick={convertToCSV}   className='float-end btn btn-dark '>Dounload File</button></li>}
+            {localStorage.getItem('premium') && <li className='me-3 p-2 fw-bold'><button onClick={()=>toggleTheme()}   className='float-end btn btn-dark '>Take Premium</button></li>}
+            {isLoginn && <li className='me-3 p-2 fw-bold'><button onClick={convertToCSV}   className='float-end btn btn-dark '>Dounload File</button></li>}
 
         </ul>
         {isLogin && <div className='d-flex flex-row justify-content-between border border-4 border-black rounded-2 p-2 align-items-end'> 

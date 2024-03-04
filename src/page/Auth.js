@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import Authentication from '../auth/Auth'
 import { useDispatch } from 'react-redux';
 import { authActions } from '../store/AuthReduces';
+import { redirect, useNavigate } from 'react-router-dom';
 
 const Auth = () => {
     const [token,setToken]=useState('');
     const [isLogin,setIsLogin]=useState(false);
     const [mode,setMode]=useState('SignUp');
+    const navigate=useNavigate();
 
     //here we wer using redux concenpt brother.
 
@@ -56,6 +58,7 @@ const Auth = () => {
             localStorage.setItem('idToken',data.idToken);
             localStorage.setItem('isLogin',isLogin);
             dispatch(authActions.login(data.idToken));
+            navigate('/')
 
             
         }catch(error){

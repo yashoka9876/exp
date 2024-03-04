@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ExpenseForm from './ExpenseForm'
 import ExpenseList from './ExpenseList'
-import { authActions } from '../../store/AuthReduces';
 import { ExpenseActions } from '../../store/ExpensesReducers';
 import { useDispatch } from 'react-redux';
 
@@ -15,7 +14,12 @@ const Expense = () => {
     const [ItemList,setItemList]=useState([]);
 //i am writting this comment because i am not able to see this PostData
 
+//getting email here from localstorage
+const UID=localStorage.getItem('UID');
+
 const dispatch=useDispatch();
+
+
 
     async function PostData(obj='defalut value'){
 
@@ -24,7 +28,7 @@ const dispatch=useDispatch();
 
      if(!postput){
       console.log('this one add function')
-      try{const response=await fetch('https://expensetrackersharp-default-rtdb.firebaseio.com/expenses.json',{
+      try{const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses.json`,{
         method:'POST',
         headers:{
           'Content-Type':'application/json'
@@ -47,7 +51,7 @@ const dispatch=useDispatch();
       console.log('bro updated key function ran this ttime');
 
       try{
-        const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/expenses/${updatedKey}.json`,{
+        const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses/${updatedKey}.json`,{
           method:'PUT',
           headers:{
             'Content-Type':'application/json'
@@ -70,7 +74,7 @@ const dispatch=useDispatch();
 //here this one is function which is used to get data when function is executing.
     async function GetData(){
       try{
-      const response=await fetch('https://expensetrackersharp-default-rtdb.firebaseio.com/expenses.json')
+      const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses.json`)
       if(!response.ok){
         throw new Error()
       }
@@ -97,6 +101,7 @@ const dispatch=useDispatch();
     },[])
 
   
+
   return (
    <>
         <ExpenseForm  

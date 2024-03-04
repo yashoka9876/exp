@@ -18,13 +18,16 @@ const ExpenseList = ({
   setUpdatedKey
 }) => {
 
+  const UID=localStorage.getItem('UID');
+
+
   const ExpenseList=useSelector(state=>state.Expence.ExpenseItem);
   console.log(ExpenseList);
 
   async function deleteHandler(id){
     console.log(id)
     try{
-      const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/expenses/${id}.json`,{
+      const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses/${id}.json`,{
         method:'DELETE',
         headers:{
           'Content-Type':'application/json'

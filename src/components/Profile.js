@@ -1,45 +1,107 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
+let OnceClickHandler=false;
 const Profile = () => {
     const profileName=useRef();
     const photoUrl=useRef();
 
-    useEffect(()=>{
-        async function getProfileData(){
-            try{const response=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
-                },
-                body:JSON.stringify({
-                    idToken:localStorage.getItem('idToken')
-                })
+    const UID=localStorage.getItem('UID');
+    
+
+    // useEffect(()=>{
+    //     async function getProfileData(){
+    //         try{const response=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU',{
+    //             method:'POST',
+    //             headers:{
+    //                 'Content-Type':'application/json',
+    //             },
+    //             body:JSON.stringify({
+    //                 idToken:localStorage.getItem('idToken')
+    //             })
             
-            })
-            if(!response.ok){
-                throw new Error('!!!!!!!!!!!!!!!!')
-            }
-            const data=await response.json();
-            profileName.current.value=data.users[0].displayName;
-            photoUrl.current.value=data.users[0].photoUrl;
-        }catch(error){
-                console.error('we got failed to get data'+ error)
-            }
-        }
+    //         })
+    //         if(!response.ok){
+    //             throw new Error('!!!!!!!!!!!!!!!!')
+    //         }
+    //         const data=await response.json();
+    //         profileName.current.value=data.users[0].displayName;
+    //         photoUrl.current.value=data.users[0].photoUrl;
+    //     }catch(error){
+    //             console.error('we got failed to get data'+ error)
+    //         }
+    //     }
 
-        getProfileData();
-    },[])
+    //     getProfileData();
+    // },[])
 
 
-     function FormHandler(event){
+    //  function FormHandler(event){
+    //     event.preventDefault();
+    //     console.log(profileName.current.value);
+    //     console.log(photoUrl.current.value);
+    //     console.log(localStorage.getItem('idToken'));
+    //     async function UPF(){
+    //         try{const response=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU',{
+    //             method:'POST',
+    //             headers:{
+    //                 'Content-Type':'Application/json'
+    //             },
+    //             body:JSON.stringify({
+    //                 idToken:localStorage.getItem('idToken'),
+    //                 displayName:profileName.current.value,
+    //                 photoUrl:photoUrl.current.value,
+    //                 returnSecureToken:false
+    //             })
+
+    //         })
+    //         if(!response.ok){
+    //             throw new Error('profile not updated brother');
+    //         }
+    //         const data=await response.json();
+    //         console.log(data);
+    //     }catch(error){
+    //         console.error('we got some error brother'+error)
+    //     }
+
+    //     };
+    //     UPF();
+       
+    // }
+
+
+    // Here i am going to appy fucking logic because i coould not get here that one logic.
+
+// old one
+// https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU
+
+//old one for get data
+// https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU
+
+    // https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses.json
+
+    function FormHandler(event){
+
         event.preventDefault();
         console.log(profileName.current.value);
         console.log(photoUrl.current.value);
         console.log(localStorage.getItem('idToken'));
+        let url;
+        let METHOD;
+        console.log(OnceClickHandler)
+        
+        if(OnceClickHandler){
+            url=`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/expenses/${localStorage.getItem('profileKey')}.json`
+            METHOD='PUT'
+        }else{
+            url=`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/profile.json`
+            METHOD='POST'
+        }
+
+        OnceClickHandler=true;
+
         async function UPF(){
-            try{const response=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDa_jbUsg5x1ywvKesSXurNjxjYY7Hn2BU',{
-                method:'POST',
+            try{const response=await fetch(url,{
+                method:METHOD,
                 headers:{
                     'Content-Type':'Application/json'
                 },
@@ -61,9 +123,41 @@ const Profile = () => {
         }
 
         };
+
+
         UPF();
        
     }
+
+
+    useEffect(()=>{
+        async function getProfileData(){
+
+            try{
+                const response=await fetch(`https://expensetrackersharp-default-rtdb.firebaseio.com/users/${UID}/profile.json`)
+         
+                if(!response.ok){
+                throw new Error('!!!!!!!!!!!!!!!!')
+            }
+            const data=await response.json();
+            console.log(data)
+            console.log(data);
+            console.log(Object.keys(data));
+            localStorage.setItem('profileKey',Object.keys(data));
+            console.log(Object.values(data)[0].displayName)
+            console.log(Object.values(data)[0].photoUrl)
+
+             profileName.current.value=Object.values(data)[0].displayName
+            photoUrl.current.value=Object.values(data)[0].photoUrl
+        }catch(error){
+                console.error('we got failed to get data'+ error);
+            }
+        }
+
+        getProfileData();
+    },[])
+
+
 
 
 

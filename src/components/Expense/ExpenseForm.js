@@ -20,6 +20,9 @@ const ExpenseForm = ({
     // You can handle form submission here
     console.log('Form submitted:', { moneySpent, description, category });
     PostData({moneySpent, description, category});
+    setMoneySpent('');
+    setCategory('');
+    setDescription('')
   };
   return (
     <div className="container">

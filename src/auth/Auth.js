@@ -17,6 +17,8 @@ const Authentication = ({isLogin,mode,SignUp,ModeHandler}) => {
             returnSecureToken:true
         }
         
+        const modifiedEmail = Email.current.value.replace(/[@.]/g, '');
+        localStorage.setItem('UID',modifiedEmail);
         if(mode===SignUp){
                 if(Password.current.value !== ConfirmPassword.current.value){
                     window.confirm('password an confirm password are not same');

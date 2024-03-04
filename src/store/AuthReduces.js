@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const authInitialState={
     Token:null,
-    isLogin:false
+    isLogin:false,
 }
 
 const authSlice=createSlice({
@@ -17,6 +17,8 @@ const authSlice=createSlice({
             console.log('this is logout in redux')
             state.Token=null;
             state.isLogin=false;
+            localStorage.removeItem('UID');
+            localStorage.removeItem('idToken')
         }
     }
 })

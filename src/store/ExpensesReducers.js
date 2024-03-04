@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialExpensesState={
     ExpenseItem:[],
-    premium:true,
+    premium:false,
     totalExpeses:0
 }
 const ExpenseSlice=createSlice({
@@ -20,6 +20,7 @@ const ExpenseSlice=createSlice({
             state.totalExpeses+= state.totalExpeses+(+actions.payload);
             if(state.totalExpeses>=10000){
                 state.premium=true;
+                localStorage.setItem('premium',true);
             }
         }
         
